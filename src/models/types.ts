@@ -1,10 +1,8 @@
 export type SignalColour = 'green' | 'red' | 'blue' | 'pink'; // цвет сигнала
-export type SignalShape = 'square' | 'circle'; // форма сигнала
 export type SignalOption = 'go' | 'noGo'; // тип сигнала
 
 export interface Signal {
 	option: SignalOption;
-	shape: SignalShape;
 	colour: SignalColour;
 }
 

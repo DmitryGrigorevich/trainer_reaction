@@ -1,4 +1,4 @@
-import type { Signal, SignalColour, SignalShape, SignalOption } from "./types";
+import type { Signal, SignalColour, SignalOption } from "./types";
 
 export class SignalGenerator {
 	constructor(
@@ -22,11 +22,6 @@ export class SignalGenerator {
 		return restColour[needColour];
 	}
 
-	private shapeRandom (): SignalShape{
-		const dig = Math.random();
-		return dig > 0.5 ? 'square' : 'circle';
-	}
-
 	private delayRandom (): number {
 		return Math.floor(Math.random() * (this.maxDelay - this.minDelay) + this.minDelay);
 	}
@@ -34,12 +29,10 @@ export class SignalGenerator {
 	genNextSignal(): {signal: Signal; delay: number} { 
 		const option = this.signalRandom();
 		const colour = this.colourRandom(option);
-		const shape = this.shapeRandom();
 
 		const signal: Signal = {
 			option: option,
 			colour: colour,
-			shape: shape
 		};
 		const delay = this.delayRandom();
 
