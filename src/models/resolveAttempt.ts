@@ -2,10 +2,21 @@ import type { Attempt, AttemptResult, Signal } from "./types";
 
 
 export function resolveAttempt(
-	signal: Signal,
-	timeOfAppearance: number,
+	signal: Signal | null,
+	timeOfAppearance: number | null,
 	timeOfPressing: number | null
 ): Attempt {
+
+	if (!signal || timeOfAppearance === null) {
+		return {
+			signal: signal,
+			timeOfAppearance: timeOfAppearance,
+			timeOfPressing: timeOfPressing,
+			result: 'miss',
+			timeReaction: null
+		};
+	}
+
 	let result: AttemptResult;
 	let timeReaction: number | null = null;
 	
