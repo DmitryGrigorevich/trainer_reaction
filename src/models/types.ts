@@ -13,8 +13,8 @@ correctMiss - корректный пропуск (нецелевой сигна
 export type AttemptResult = 'hit' | 'miss' | 'correctMiss' | 'falseHit';
 
 export interface Attempt {
-	signal: Signal;
-	timeOfAppearance: number; // время появления сигнала
+	signal: Signal | null;
+	timeOfAppearance: number | null; // время появления сигнала
 	timeOfPressing: number | null; // время нажатия (если было)
 	result: AttemptResult; // результат попытки
 	timeReaction: number | null;  // время реакции только для успешной попытки (hit)
