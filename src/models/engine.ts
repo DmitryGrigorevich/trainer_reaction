@@ -69,6 +69,13 @@ export class TrainerEngine {
 	}
 
 	private finishAttempt(time: number | null): void {
+		if (this.signal === null || this.signalTime === null) return;
+
+		if (this.responseTime !== null) {
+			clearTimeout(this.responseTime);
+			this.responseTime = null;
+		}
+
 		const attempt =  resolveAttempt(
 			this.signal,
 			this.signalTime, 
