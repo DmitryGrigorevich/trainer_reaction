@@ -7,11 +7,13 @@ export class SignalGenerator {
 		private indProbably: number = 0.6 // коэффицент go/noGo сигналов
 	) {}
 
+	// какой сигнал генерировать 
 	private signalRandom (): SignalOption{
 		const dig = Math.random();
 		return this.indProbably >= dig ? 'go' : 'noGo';
 	}
 
+	// цвет сигнала
 	private colourRandom(option: SignalOption): SignalColour {
 		if (option === 'go') {
 			return 'green';
@@ -22,11 +24,14 @@ export class SignalGenerator {
 		return restColour[needColour];
 	}
 
+	// для расчета случайно задержки
 	private delayRandom (): number {
 		return Math.floor(Math.random() * (this.maxDelay - this.minDelay) + this.minDelay);
 	}
 
+	//генерируем следующий сигнал
 	genNextSignal(): {signal: Signal; delay: number} { 
+		//го или не го и далее цвет соответствующий
 		const option = this.signalRandom();
 		const colour = this.colourRandom(option);
 
@@ -36,15 +41,7 @@ export class SignalGenerator {
 		};
 		const delay = this.delayRandom();
 
+		//возвращаем сигнал и задержку
 		return {signal, delay}
 	}
 }
-
-const tmp = new SignalGenerator();
-
-console.log(tmp.genNextSignal())
-console.log(tmp.genNextSignal())
-console.log(tmp.genNextSignal())
-console.log(tmp.genNextSignal())
-console.log(tmp.genNextSignal())
-console.log(tmp.genNextSignal())

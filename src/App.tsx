@@ -8,15 +8,20 @@ import { Storage } from './models/storage.ts';
 import type { Signal, TotalStats } from './models/types.ts';
 
 function App() {
+	// состояния на сигнал, кол-во попыток и статистику
 	const [signal, setSignal] = useState<Signal | null>(null);
 	const [attempts, setAttempts] = useState(0);
 	const [stats, setStats] = useState<TotalStats | null>(null);
+
+	//юзэфект для запуска движка
+	//регистрация обработчки клавиатуры и очистки
 	useEffect(() => {
 		const engine = new TrainerEngine(
 			new SignalGenerator(),
 			new Session(Date.now().toString()),
 			new Storage()
 		);
+		//запуска движка и передача колбеков
 		engine.start({
 			showSignal: (signal) => {
 				setSignal(signal);
@@ -30,20 +35,29 @@ function App() {
 			}
 		});
 
+		//обработчки события 
+		//если пробел то вызываем handlePress
 		const handler = (event: KeyboardEvent) => {
 			if (event.code === 'Space') {
+				event.preventDefault();
 				engine.handlePress();
 			}
 		};
 		
+		//регистрация обработчки события 
 		window.addEventListener('keydown', handler);
 
+		//очистка useEffect
 		return () => {
+			// удаляем обработчки клавиатуры
 			window.removeEventListener('keydown', handler);
+			
+			//отменяем таймеры двжика
 			engine.stop();
 		};
 	}, []);
 
+	//если статс готов, то финальные результаты
 	if (stats) {
 		return (
 			<div>
@@ -60,6 +74,7 @@ function App() {
 			</div>
 		);
 	}
+	//иначе играем
 	return (
 		<div
 			style={{

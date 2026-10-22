@@ -23,6 +23,7 @@ export class Session {
 		return [...this.attempts];
 	}
 
+	// нужен для отображения количества попыток сделанных
 	getAttemptsCount(): number {
 		return this.attempts.length;
 	}
